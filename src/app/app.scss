@@ -26,16 +26,16 @@ src: url('../assets/fonts/Sailec-Regular.otf');
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-html{
-    display: flex;
-    justify-content: center;
-    align-items: center
-}
-body{
-    max-width: 414px;
-    max-height: 736px;
-    border: 1px solid black;
-}
+// html{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center
+// }
+// body{
+//     max-width: 414px;
+//     max-height: 736px;
+//     border: 1px solid black;
+// }
 
 ion-card{
     box-shadow: none !important;
