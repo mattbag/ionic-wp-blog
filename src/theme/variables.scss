@@ -22,8 +22,10 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-
-
+$loading-ios-background: transparent;
+$font-family-ios-base: "Sailec";
+$font-family-md-base: $font-family-ios-base;
+$font-family-wp-base: $font-family-ios-base;
 
 // Named Color Variables
 // --------------------------------------------------
@@ -34,10 +36,10 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
+  primary:    #000,
+  secondary:  #990000,
+  danger:     #cc0000,
+  light:      #fff,
   dark:       #222
 );
 

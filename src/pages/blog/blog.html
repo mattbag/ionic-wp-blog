@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="light">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Blog</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let post of posts | async" (click)="openPost(post)" tappable>
+    <img [src]="post.media_url | async">
+    <ion-card-content>
+      <ion-card-title>
+        {{ post.title }}
+      </ion-card-title>
+      <div [innerHTML]="post.excerpt"></div>
+    </ion-card-content>
+  </ion-card>
+ 
+</ion-content>

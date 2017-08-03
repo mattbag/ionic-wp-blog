@@ -1,6 +1,17 @@
 // http://ionicframework.com/docs/theming/
-
-
+@font-face {
+font-family: 'sailec';
+// font-weight: 300;
+font-style: normal;
+src: url('../assets/fonts/Sailec-Regular.otf');
+// src: url('../assets/fonts/Lato-300/Lato-300.eot?#iefix') format('embedded-opentype'),
+// local('Lato Light'),
+// local('Lato-300'),
+// url('../assets/fonts/Lato-300/Lato-300.woff2') format('woff2'),
+// url('../assets/fonts/Lato-300/Lato-300.woff') format('woff'),
+// url('../assets/fonts/Lato-300/Lato-300.ttf') format('truetype'),
+// url('../assets/fonts/Lato-300/Lato-300.svg#Lato') format('svg');
+}
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +25,27 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+html{
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+body{
+    max-width: 414px;
+    max-height: 736px;
+    border: 1px solid black;
+}
+
+ion-card{
+    box-shadow: none !important;
+    border: 1px solid black;
+    border-radius: 0 !important;
+}
+figure{
+    text-align: center
+}
+.aligncenter{
+    display: block;
+    margin: 0 auto;
+}

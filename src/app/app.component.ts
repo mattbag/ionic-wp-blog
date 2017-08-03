@@ -1,10 +1,9 @@
+import { Observable } from 'rxjs/Observable';
+import { WpProvider, Page } from './../providers/wp/wp';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 @Component({
   templateUrl: 'app.html'
@@ -12,19 +11,24 @@ import { ListPage } from '../pages/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = 'HomePage';
 
   pages: Array<{title: string, component: any}>;
+  wpPages: Observable<Page[]>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public _wp: WpProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Home', component: 'HomePage' },
+      { title: 'Blog', component: 'BlogPage' }
     ];
 
+    this.wpPages = this._wp.getPages();
+      this.wpPages.map(page=>{
+        this.pages.push()
+      })
   }
 
   initializeApp() {
@@ -41,4 +45,9 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+  // openWpPage(page) {
+  //   // Reset the content nav to have just this page
+  //   // we wouldn't want the back button to show in this scenario
+  //   this.nav.setRoot('wpPage');
+  // }
 }

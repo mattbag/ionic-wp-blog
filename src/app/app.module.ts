@@ -3,32 +3,45 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { WpProvider } from '../providers/wp/wp';
+
+import { Http, HttpModule } from '@angular/http';
+import { 
+  WpApiModule,
+  WpApiLoader,
+  WpApiStaticLoader
+} from 'wp-api-angular'
+
+export function WpApiLoaderFactory(http) {
+  return new WpApiStaticLoader(http, 'http://the-beautyinsider.com/wp-json');
+}
 
 @NgModule({
   declarations: [
-    MyApp,
-    HomePage,
-    ListPage
+    MyApp
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{mode: 'ios'}),
+    HttpModule,
+    WpApiModule.forRoot({
+      provide: WpApiLoader,
+      useFactory: (WpApiLoaderFactory),
+      deps: [Http]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    HomePage,
-    ListPage
+    MyApp
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    WpProvider
   ]
 })
 export class AppModule {}
