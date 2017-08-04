@@ -55,8 +55,8 @@ export class WpProvider {
   getPostsByCat(category: string = 'makeup'): Observable<Post[]> {
 
     const uRLSearchParams = new URLSearchParams();
-    uRLSearchParams.set('category', category.toLocaleLowerCase().replace(' ','_'));
-// console.log(uRLSearchParams);
+    uRLSearchParams.set('category', category.toLocaleLowerCase().replace(' ', '_'));
+    console.log('getting');
 
     return this.wpApiPosts.getList({ search: uRLSearchParams })
       .map(res => res.json())
@@ -118,4 +118,29 @@ export class WpProvider {
         return pages;
       });
   }
+  getPageById(id: number): Observable<Page[]> {
+  
+    return this.wpApiPages.get(id)
+      .map(res => res.json())
+      .map(data => {
+        var page = data;
+       
+        // console.log(data);
+
+        return page;
+      });
+  }
+     getPageBySlug(slug: string) {
+        const uRLSearchParams = new URLSearchParams();
+        uRLSearchParams.set('slug', slug.toString().replace(' ','-'));
+
+       return this.wpApiPages.getList(
+           { search: uRLSearchParams}
+        ).map((r) => r.json())
+          // .map(page=>{
+          //     page.media_url = this.getMedia(page.id);
+          //     console.log(page);
+              
+          // })
+    }
 }

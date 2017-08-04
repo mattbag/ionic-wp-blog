@@ -12,12 +12,12 @@
 
 <ion-content>
 <div *ngIf="category_side === 'products'" style="display:contents">
- hey products
+   {{(pageData | async)?.media_url}} 
+
 </div>
 <div *ngIf="category_side === 'posts'" style="display:contents">
- <ion-slides> 
-  <ion-slide  *ngFor="let post of posts | async" (click)="openPost(post)" tappable>
-     <ion-card>
+ 
+     <ion-card *ngFor="let post of posts | async" (click)="openPost(post)" tappable>
     <img [src]="post.media_url | async">
     <ion-card-content>
       <ion-card-title>
@@ -26,12 +26,12 @@
       <div [innerHTML]="post.excerpt"></div>
     </ion-card-content>
   </ion-card>
-  </ion-slide>
-
-</ion-slides>
+  
 </div>
 <div *ngIf="category_side === 'content'" style="display:contents">
- hey content
+<img [src]="featured | async">
+ <div [innerHTML]="content" class='overlapper'></div>
+ 
 </div>
 </ion-content>
 <ion-footer>
