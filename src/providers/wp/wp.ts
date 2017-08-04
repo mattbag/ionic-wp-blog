@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { WpApiPosts, WpApiMedia, WpApiPages } from 'wp-api-angular';
+import { URLSearchParams } from '@angular/http';
 
 export class Post {
   public media_url: Observable<string>;
@@ -21,6 +22,24 @@ export class WpProvider {
 
 getPosts(): Observable<Post[]> {
     return this.wpApiPosts.getList()
+      .map(res => res.json())
+      .map(data => {
+        var posts = [];
+        for (let post of data) {
+          let onePost = new Post(post[ 'author' ], post[ 'id' ], post[ 'title' ][ 'rendered' ], post[ 'content' ][ 'rendered' ], post[ 'excerpt' ][ 'rendered' ], post[ 'date' ],post['categories'], post[ 'featured_media' ]);
+          onePost.media_url = this.getMedia(onePost.mediaId);
+          // onePost.categories = this.getCat(onePost.id, 1);
+          posts.push(onePost);
+        }
+        return posts;
+      });
+  }
+    getPostsPage(page: number): Observable<Post[]> {
+
+      const uRLSearchParams = new URLSearchParams();
+        uRLSearchParams.set('page', page.toString());
+
+    return this.wpApiPosts.getList({search: uRLSearchParams})
       .map(res => res.json())
       .map(data => {
         var posts = [];

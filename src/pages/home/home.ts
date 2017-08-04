@@ -24,6 +24,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public wpProvider: WpProvider, public loadingCtrl: LoadingController) {
     this.presentLoading();
     this.posts = this.wpProvider.getPosts();
+    // this.posts = this.wpProvider.getPostsPage();
     this.posts.subscribe(data => {
       this.loader.dismiss();
       // console.log(data);

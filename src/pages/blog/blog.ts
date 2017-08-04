@@ -1,14 +1,7 @@
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, LoadingController, Loading } from 'ionic-angular';
 import { Post, WpProvider } from "../../providers/wp/wp";
-
-/**
- * Generated class for the BlogPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,18 +11,30 @@ import { Post, WpProvider } from "../../providers/wp/wp";
 export class BlogPage {
 
   loader: Loading;
-  posts: Observable<Post[]>;
+  posts: any;
+post_page: number = 1;
 
   constructor(public navCtrl: NavController, public wpProvider: WpProvider, public loadingCtrl: LoadingController) {
     this.presentLoading();
-    this.posts = this.wpProvider.getPosts();
-    this.posts.subscribe(data =>{
+    // this.posts = this.wpProvider.getPosts();
+    let _posts = this.wpProvider.getPostsPage(this.post_page);
+    _posts.subscribe(data =>{
         this.loader.dismiss();
         // console.log(data);
-        
+        this.posts = [...data];
+        this.post_page++
     });
   }
-
+doInfinite(event){
+console.log('get more posts');
+let newPosts = this.wpProvider.getPostsPage(this.post_page);
+newPosts.subscribe(data =>{
+ this.posts.push(...data)
+        // console.log(data);
+        this.post_page++
+        event.complete();
+    });
+}
   presentLoading() {
     this.loader = this.loadingCtrl.create({
        spinner: 'hide',

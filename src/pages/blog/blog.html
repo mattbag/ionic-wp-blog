@@ -9,14 +9,17 @@
 
 
 <ion-content padding>
-  <ion-card *ngFor="let post of posts | async" (click)="openPost(post)" tappable>
-    <img [src]="post.media_url | async">
+  <ion-card *ngFor="let post of posts" (click)="openPost(post)" tappable>
+    <img [src]="post?.media_url | async" *ngIf="post?.media_url">
     <ion-card-content>
       <ion-card-title>
         {{ post.title }}
       </ion-card-title>
-      <div [innerHTML]="post.excerpt"></div>
+      <div [innerHTML]="post?.excerpt"></div>
     </ion-card-content>
   </ion-card>
- 
+ <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+<img src="/assets/logo.gif" width="80" style="display: block; margin: 20px auto;" *ngIf="posts?.length > 0">
+ </ion-infinite-scroll>
+
 </ion-content>
