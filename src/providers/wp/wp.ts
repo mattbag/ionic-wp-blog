@@ -20,13 +20,13 @@ export class WpProvider {
     console.log('Hello WpProvider Provider');
   }
 
-getPosts(): Observable<Post[]> {
+  getPosts(): Observable<Post[]> {
     return this.wpApiPosts.getList()
       .map(res => res.json())
       .map(data => {
         var posts = [];
         for (let post of data) {
-          let onePost = new Post(post[ 'author' ], post[ 'id' ], post[ 'title' ][ 'rendered' ], post[ 'content' ][ 'rendered' ], post[ 'excerpt' ][ 'rendered' ], post[ 'date' ],post['categories'], post[ 'featured_media' ]);
+          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
           onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           posts.push(onePost);
@@ -34,17 +34,17 @@ getPosts(): Observable<Post[]> {
         return posts;
       });
   }
-    getPostsPage(page: number): Observable<Post[]> {
+  getPostsPage(page: number): Observable<Post[]> {
 
-      const uRLSearchParams = new URLSearchParams();
-        uRLSearchParams.set('page', page.toString());
+    const uRLSearchParams = new URLSearchParams();
+    uRLSearchParams.set('page', page.toString());
 
-    return this.wpApiPosts.getList({search: uRLSearchParams})
+    return this.wpApiPosts.getList({ search: uRLSearchParams })
       .map(res => res.json())
       .map(data => {
         var posts = [];
         for (let post of data) {
-          let onePost = new Post(post[ 'author' ], post[ 'id' ], post[ 'title' ][ 'rendered' ], post[ 'content' ][ 'rendered' ], post[ 'excerpt' ][ 'rendered' ], post[ 'date' ],post['categories'], post[ 'featured_media' ]);
+          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
           onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           posts.push(onePost);
@@ -52,23 +52,41 @@ getPosts(): Observable<Post[]> {
         return posts;
       });
   }
+  getPostsByCat(category: string = 'makeup'): Observable<Post[]> {
 
-    getMedia(id: number): Observable<string> {
+    const uRLSearchParams = new URLSearchParams();
+    uRLSearchParams.set('category', category.toLocaleLowerCase().replace(' ','_'));
+// console.log(uRLSearchParams);
+
+    return this.wpApiPosts.getList({ search: uRLSearchParams })
+      .map(res => res.json())
+      .map(data => {
+        var posts = [];
+        for (let post of data) {
+          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
+          onePost.media_url = this.getMedia(onePost.mediaId);
+          // onePost.categories = this.getCat(onePost.id, 1);
+          posts.push(onePost);
+        }
+        return posts;
+      });
+  }
+  getMedia(id: number): Observable<string> {
     return this.wpApiMedia.get(id)
       .map(res => res.json())
       .map(data => {
-        return data[ 'source_url' ];
+        return data['source_url'];
       });
   }
-    getCat(post_id: number, cat_id: number): any {
-      return this.wpApiPosts.getCategory(post_id, cat_id)
-         
-      .map(res => res.json())
-      .map(data => {
-       console.log(data);
-       
-      });
-    }
+  // getCat(post_id: number, cat_id: number): any {
+  //   return this.wpApiPosts.getCategory(post_id, cat_id)
+
+  //     .map(res => res.json())
+  //     .map(data => {
+  //       console.log(data);
+
+  //     });
+  // }
 
   //   getProds(): Observable<Post[]> {
   //   return this.wpApiTypes.getList()
@@ -84,19 +102,19 @@ getPosts(): Observable<Post[]> {
   //       return prods;
   //     });
   // }
-      getPages(): Observable<Page[]> {
+  getPages(): Observable<Page[]> {
     return this.wpApiPages.getList()
       .map(res => res.json())
       .map(data => {
         var pages = [];
         for (let page of data) {
-          let onePost = new Post(page[ 'author' ], page[ 'id' ], page[ 'title' ][ 'rendered' ], page[ 'content' ][ 'rendered' ], page[ 'excerpt' ][ 'rendered' ], page[ 'date' ],page['categories'], page[ 'featured_media' ]);
+          let onePost = new Post(page['author'], page['id'], page['title']['rendered'], page['content']['rendered'], page['excerpt']['rendered'], page['date'], page['categories'], page['featured_media']);
           onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           pages.push(onePost);
         }
         // console.log(pages);
-        
+
         return pages;
       });
   }

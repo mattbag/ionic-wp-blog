@@ -10,9 +10,9 @@
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
-       <button menuClose ion-item *ngFor="let p of wpPages | async" (click)="openPage(p)">
+       <!-- <button menuClose ion-item *ngFor="let p of wpPages | async" (click)="openPage(p)">
         {{p.title | titlecase}}
-      </button>
+      </button> -->
     </ion-list>
   </ion-content>
 

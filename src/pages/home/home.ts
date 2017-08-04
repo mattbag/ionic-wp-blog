@@ -29,7 +29,7 @@ export class HomePage {
       this.loader.dismiss();
       // console.log(data);
       // this.posts3 = data.slice(0,3);
-      
+
       // console.log(this.posts3)
     });
   }
@@ -51,7 +51,7 @@ export class HomePage {
   openPost(post: Post) {
     this.navCtrl.push('PostPage', { post: post });
   }
-goBlog(){
-  this.navCtrl.setRoot('BlogPage')
-}
+  goBlog() {
+    this.navCtrl.setRoot('BlogPage')
+  }
 }

@@ -22,7 +22,12 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: 'HomePage' },
-      { title: 'Blog', component: 'BlogPage' }
+      { title: 'Blog', component: 'BlogPage' },
+      { title: 'Makeup', component: 'CategoryPage' },
+      { title: 'Lifestyle', component: 'CategoryPage' },
+      { title: 'Skincare', component: 'CategoryPage' },
+      { title: 'Hair', component: 'CategoryPage' },
+       { title: 'Beauty Talk', component: 'CategoryPage' }
     ];
 
     this.wpPages = this._wp.getPages();
@@ -43,7 +48,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component, {page : page});
   }
   // openWpPage(page) {
   //   // Reset the content nav to have just this page

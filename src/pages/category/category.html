@@ -1,0 +1,51 @@
+<ion-header>
+
+  <ion-navbar color="light">
+     <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{page?.title | titlecase}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+<div *ngIf="category_side === 'products'" style="display:contents">
+ hey products
+</div>
+<div *ngIf="category_side === 'posts'" style="display:contents">
+ <ion-slides> 
+  <ion-slide  *ngFor="let post of posts | async" (click)="openPost(post)" tappable>
+     <ion-card>
+    <img [src]="post.media_url | async">
+    <ion-card-content>
+      <ion-card-title>
+        {{ post.title }}
+      </ion-card-title>
+      <div [innerHTML]="post.excerpt"></div>
+    </ion-card-content>
+  </ion-card>
+  </ion-slide>
+
+</ion-slides>
+</div>
+<div *ngIf="category_side === 'content'" style="display:contents">
+ hey content
+</div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-segment [(ngModel)]="category_side" color="secondary">
+      <ion-segment-button value="products">
+        <ion-icon name="ios-eye-outline"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="posts">
+        <ion-icon name="ios-albums-outline"></ion-icon>
+      </ion-segment-button>
+       <ion-segment-button value="content">
+        <ion-icon name="ios-book-outline"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-footer>
