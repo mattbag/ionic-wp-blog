@@ -12,7 +12,7 @@
 
 <ion-content>
 <div *ngIf="category_side === 'products'" style="display:contents">
-   {{(pageData | async)?.media_url}} 
+display products
 
 </div>
 <div *ngIf="category_side === 'posts'" style="display:contents">
@@ -30,7 +30,7 @@
 </div>
 <div *ngIf="category_side === 'content'" style="display:contents">
 <img [src]="featured | async">
- <div [innerHTML]="content" class='overlapper'></div>
+ <div [innerHTML]="content" class='overlapper' *ngIf="featured"></div>
  
 </div>
 </ion-content>
