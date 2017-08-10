@@ -51,7 +51,7 @@ export class CategoryPage {
     if (this.page == undefined) {
       // console.log('undef');
       // this.page = { title: 'makeup' };
-      this.navCtrl.setRoot('BlogPage');
+      this.navCtrl.setRoot('HomePage');
       // console.log(this.page);
       return
 
@@ -73,6 +73,9 @@ export class CategoryPage {
   }
   openPost(post: Post) {
     this.navCtrl.push('PostPage', { post: post });
+  }
+   openProd(post: Post) {
+    this.navCtrl.push('ProductPage', { post: post });
   }
 
 }

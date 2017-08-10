@@ -19,7 +19,7 @@ export class ProductsPage {
   products: Observable<Post[]>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public _wp: WpProvider) {
-     this.products = this._wp.getProds('');
+     this.products = this._wp.getProds();
   }
 
   ionViewDidLoad() {
@@ -27,5 +27,8 @@ export class ProductsPage {
   }
  openPost(post: Post) {
     this.navCtrl.push('PostPage', { post: post });
+  }
+  openProd(post: Post) {
+    this.navCtrl.push('ProductPage', { post: post });
   }
 }

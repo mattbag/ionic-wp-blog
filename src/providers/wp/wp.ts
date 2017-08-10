@@ -91,7 +91,7 @@ export class WpProvider {
   //     });
   // }
 
-    getProds(category: string): Observable<Post[]> {
+    getProds(category?: string): Observable<Post[]> {
      
        const uRLSearchParams = new URLSearchParams();
        uRLSearchParams.set('categories', category);

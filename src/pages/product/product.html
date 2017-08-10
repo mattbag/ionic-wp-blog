@@ -1,0 +1,22 @@
+<ion-header>
+
+   <ion-navbar color="light">
+     <ion-title>The Beauty Insider</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div padding>
+  <h2>{{product?.title}}</h2>
+  </div>
+<img [src]="product?.media_url | async">
+  <div [innerHTML]="product?.content" padding></div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="secondary" (click)="openLink()">
+    <ion-title>Buy Now</ion-title>
+  </ion-toolbar>
+</ion-footer>

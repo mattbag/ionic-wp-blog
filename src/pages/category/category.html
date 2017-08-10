@@ -12,7 +12,7 @@
 
 <ion-content>
 <div *ngIf="category_side === 'products'" style="display:contents">
-  <ion-card *ngFor="let prod of products | async" (click)="openPost(prod)" tappable>
+  <ion-card *ngFor="let prod of products | async" (click)="openProd(prod)" tappable>
     <img [src]="prod.media_url | async" prod>
     <ion-card-content>
       <ion-card-title>
