@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar color="light">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Products</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let prod of products | async" (click)="openPost(prod)" tappable>
+      <ion-avatar item-start *ngIf="prod.media_url">
+        <img [src]="prod.media_url | async" prod>
+      </ion-avatar>
+      {{ prod.title }}
+      <!-- <div [innerHTML]="prod.excerpt"></div> -->
+    </ion-item>
+  </ion-list>
+<img src="/assets/logo.gif" width="150" style="display: block; margin: 20px auto;">
+
+</ion-content>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import { WpApiPosts, WpApiMedia, WpApiPages } from 'wp-api-angular';
+import { WpApiPosts, WpApiMedia, WpApiPages, WpApiTypes, WpApiCustom } from 'wp-api-angular';
 import { URLSearchParams } from '@angular/http';
 
 export class Post {
@@ -16,7 +16,7 @@ export class Page {
 @Injectable()
 export class WpProvider {
 
-  constructor(public wpApiPosts: WpApiPosts, public wpApiMedia: WpApiMedia, public wpApiPages: WpApiPages) {
+  constructor(public wpApiPosts: WpApiPosts, public wpApiMedia: WpApiMedia, public wpApiPages: WpApiPages, public wpApiCustom: WpApiCustom) {
     console.log('Hello WpProvider Provider');
   }
 
@@ -88,20 +88,27 @@ export class WpProvider {
   //     });
   // }
 
-  //   getProds(): Observable<Post[]> {
-  //   return this.wpApiTypes.getList()
-  //     .map(res => res.json())
-  //     .map(data => {
-  //       var prods = [];
-  //       for (let prod of data) {
-  //         let onePost = new Post(prod[ 'author' ], prod[ 'id' ], prod[ 'title' ][ 'rendered' ], prod[ 'content' ][ 'rendered' ], prod[ 'excerpt' ][ 'rendered' ], prod[ 'date' ],prod['categories'], prod[ 'featured_media' ]);
-  //         onePost.media_url = this.getMedia(onePost.mediaId);
-  //         // onePost.categories = this.getCat(onePost.id, 1);
-  //         prods.push(onePost);
-  //       }
-  //       return prods;
-  //     });
-  // }
+    getProds(category: string): Observable<Post[]> {
+     
+       const uRLSearchParams = new URLSearchParams();
+       uRLSearchParams.set('category', category.toLocaleLowerCase().replace(' ', '_'));
+        uRLSearchParams.set('posts_per_page', '20');
+         let instance = this.wpApiCustom.getInstance('products');
+    return instance.getList( { search: uRLSearchParams})
+      .map(res => res.json())
+      .map(data => {
+        console.log(data);
+
+        var prods = [];
+        for (let prod of data) {
+          let onePost = new Post(prod[ 'author' ], prod[ 'id' ], prod[ 'title' ][ 'rendered' ], prod[ 'content' ][ 'rendered' ], prod[ 'excerpt' ][ 'rendered' ], prod[ 'date' ],prod['categories'], prod[ 'featured_media' ]);
+          onePost.media_url = this.getMedia(onePost.mediaId);
+          // onePost.categories = this.getCat(onePost.id, 1);
+          prods.push(onePost);
+        }
+        return prods;
+      });
+  }
   getPages(): Observable<Page[]> {
     return this.wpApiPages.getList()
       .map(res => res.json())
@@ -119,28 +126,48 @@ export class WpProvider {
       });
   }
   getPageById(id: number): Observable<Page[]> {
-  
+
     return this.wpApiPages.get(id)
       .map(res => res.json())
       .map(data => {
         var page = data;
-       
+
         // console.log(data);
 
         return page;
       });
   }
-     getPageBySlug(slug: string) {
-        const uRLSearchParams = new URLSearchParams();
-        uRLSearchParams.set('slug', slug.toString().replace(' ','-'));
+  getPageBySlug(slug: string) {
+    const uRLSearchParams = new URLSearchParams();
+    uRLSearchParams.set('slug', slug.toString().replace(' ', '-'));
 
-       return this.wpApiPages.getList(
-           { search: uRLSearchParams}
-        ).map((r) => r.json())
-          // .map(page=>{
-          //     page.media_url = this.getMedia(page.id);
-          //     console.log(page);
-              
-          // })
-    }
+    return this.wpApiPages.getList(
+      { search: uRLSearchParams }
+    ).map((r) => r.json())
+    // .map(page=>{
+    //     page.media_url = this.getMedia(page.id);
+    //     console.log(page);
+
+    // })
+  }
+   getPostsByType(type: string = 'product'): Observable<Post[]> {
+
+    const uRLSearchParams = new URLSearchParams();
+    uRLSearchParams.set('types', type.toLocaleLowerCase().replace(' ', '_'));
+    
+
+    return this.wpApiPosts.getList({ search: uRLSearchParams })
+      .map(res => res.json())
+      .map(data => {
+        console.log(data);
+        var posts = [];
+        for (let post of data) {
+          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
+          onePost.media_url = this.getMedia(onePost.mediaId);
+          // onePost.categories = this.getCat(onePost.id, 1);
+          posts.push(onePost);
+        }
+        return posts;
+      });
+  }
 }

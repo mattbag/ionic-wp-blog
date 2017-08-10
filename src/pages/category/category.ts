@@ -16,6 +16,7 @@ import { IonicPage, NavController, NavParams, Loading, LoadingController } from 
   templateUrl: 'category.html',
 })
 export class CategoryPage {
+  products: Observable<Post[]>;
   loader: Loading;
   content: string;
   category_side: string = 'products';
@@ -42,10 +43,11 @@ export class CategoryPage {
     }
     this.posts.subscribe(r =>{this.loader.dismiss()});
 
+    this.products = this._wp.getProds(this.page.title);
   }
 
   ionViewDidLoad() {
-    // console.log('hi');
+    console.log(this.products);
     if (this.page == undefined) {
       // console.log('undef');
       // this.page = { title: 'makeup' };
