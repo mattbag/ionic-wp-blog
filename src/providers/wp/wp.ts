@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
-import { WpApiPosts, WpApiMedia, WpApiPages, WpApiTypes, WpApiCustom } from 'wp-api-angular';
+import { WpApiPosts, WpApiMedia, WpApiPages, WpApiCustom } from 'wp-api-angular';
 import { URLSearchParams } from '@angular/http';
 
 export class Post {
@@ -52,10 +52,11 @@ export class WpProvider {
         return posts;
       });
   }
-  getPostsByCat(category: string = 'makeup'): Observable<Post[]> {
+  getPostsByCat(category: string): Observable<Post[]> {
+// console.log(category);
 
     const uRLSearchParams = new URLSearchParams();
-    uRLSearchParams.set('category', category.toLocaleLowerCase().replace(' ', '_'));
+    uRLSearchParams.set('categories', category);
     console.log('getting');
 
     return this.wpApiPosts.getList({ search: uRLSearchParams })
@@ -68,6 +69,8 @@ export class WpProvider {
           // onePost.categories = this.getCat(onePost.id, 1);
           posts.push(onePost);
         }
+        // console.log(posts);
+        
         return posts;
       });
   }
@@ -91,20 +94,24 @@ export class WpProvider {
     getProds(category: string): Observable<Post[]> {
      
        const uRLSearchParams = new URLSearchParams();
-       uRLSearchParams.set('category', category.toLocaleLowerCase().replace(' ', '_'));
-        uRLSearchParams.set('posts_per_page', '20');
+       uRLSearchParams.set('categories', category);
+        uRLSearchParams.set('per_page', '20');
          let instance = this.wpApiCustom.getInstance('products');
     return instance.getList( { search: uRLSearchParams})
       .map(res => res.json())
       .map(data => {
-        console.log(data);
-
+        // console.log(data);
+        let count = 0;
         var prods = [];
-        for (let prod of data) {
+        for (let prod of data.slice(0,20)) {
           let onePost = new Post(prod[ 'author' ], prod[ 'id' ], prod[ 'title' ][ 'rendered' ], prod[ 'content' ][ 'rendered' ], prod[ 'excerpt' ][ 'rendered' ], prod[ 'date' ],prod['categories'], prod[ 'featured_media' ]);
           onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
-          prods.push(onePost);
+          if(count <= 20){
+            prods.push(onePost);
+            // console.log(count);
+          count++
+          }
         }
         return prods;
       });

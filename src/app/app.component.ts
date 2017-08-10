@@ -13,22 +13,23 @@ export class MyApp {
 
   rootPage: any = 'HomePage';
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, cat_id? :number}>;
   wpPages: Observable<Page[]>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public _wp: WpProvider) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
+// categories will be attached with a query
     this.pages = [
       { title: 'Home', component: 'HomePage' },
       { title: 'Blog', component: 'BlogPage' },
+      { title: 'Monthly Top 10', component: 'CategoryPage' , cat_id : 19},
       { title: 'Products', component: 'ProductsPage' },
-      { title: 'Makeup', component: 'CategoryPage' },
-      { title: 'Lifestyle', component: 'CategoryPage' },
-      { title: 'Skincare', component: 'CategoryPage' },
-      { title: 'Hair', component: 'CategoryPage' },
-       { title: 'Beauty Talk', component: 'CategoryPage' }
+      { title: 'Makeup', component: 'CategoryPage' , cat_id : 1},
+      { title: 'Lifestyle', component: 'CategoryPage', cat_id : 17 },
+      { title: 'Skincare', component: 'CategoryPage', cat_id : 2 },
+      { title: 'Hair', component: 'CategoryPage' , cat_id: 4},
+      { title: 'Beauty Talk', component: 'CategoryPage' , cat_id : 18}
     ];
 
     this.wpPages = this._wp.getPages();

@@ -27,23 +27,23 @@ export class CategoryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public _wp: WpProvider, public loadingCtrl: LoadingController) {
     // console.log(this.page.title);
     this.page = this.navParams.get('page');
-    //  console.log(this.page.title);
+    //  console.log(this.page.cat_id);
     if (this.page == undefined) {
       // console.log('undef');
       // this.page = { title: 'makeup' };
-      this.navCtrl.setRoot('BlogPage');
+      this.navCtrl.setRoot('HomePage');
       // console.log(this.page);
       return
 
     }
 
     if (this.posts === undefined) {
-      this.posts = this._wp.getPostsByCat(this.page.title || 'makeup');
+      this.posts = this._wp.getPostsByCat(this.page.cat_id);
       this.presentLoading();
     }
     this.posts.subscribe(r =>{this.loader.dismiss()});
 
-    this.products = this._wp.getProds(this.page.title);
+    this.products = this._wp.getProds(this.page.cat_id);
   }
 
   ionViewDidLoad() {
