@@ -28,7 +28,7 @@ export class ProductPage {
 
   }
 openLink(){
-  console.log('linking');
-  window.open('//google.com');
+  // console.log('linking');
+  window.open(this.product.product_site);
 }
 }

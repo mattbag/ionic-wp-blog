@@ -15,8 +15,8 @@
   <ion-card *ngFor="let prod of products | async" (click)="openProd(prod)" tappable>
     <img [src]="prod.media_url | async" prod>
     <ion-card-content>
-      <ion-card-title>
-        {{ prod.title }}
+      <ion-card-title [innerHTML]="prod.title">
+
       </ion-card-title>
       <div [innerHTML]="prod.excerpt"></div>
     </ion-card-content>

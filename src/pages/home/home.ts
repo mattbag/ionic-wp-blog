@@ -46,7 +46,7 @@ export class HomePage {
   presentLoading() {
     this.loader = this.loadingCtrl.create({
       spinner: 'hide',
-      content: `<img src="/assets/logo.gif">`
+      content: `<img src="assets/logo.gif">`
     });
     this.loader.present();
   }

@@ -6,7 +6,7 @@ import { URLSearchParams } from '@angular/http';
 
 export class Post {
   public media_url: Observable<string>;
-  constructor(public authorId: number, public id: number, public title: string, public content: string, public excerpt: string, public date: string, public categories: string, public mediaId?: number, public isLoaded: boolean = false) { }
+  constructor(public authorId: number, public id: number, public title: string, public content: string, public excerpt: string, public date: string, public categories: string, public mediaId?: number, public product_site?: string) { }
 }
 export class Page {
   public media_url: Observable<string>;
@@ -108,7 +108,7 @@ export class WpProvider {
         let count = 0;
         var prods = [];
         for (let prod of data) {
-          let onePost = new Post(prod['author'], prod['id'], prod['title']['rendered'], prod['content']['rendered'], prod['excerpt']['rendered'], prod['date'], prod['categories'], prod['featured_media']);
+          let onePost = new Post(prod['author'], prod['id'], prod['title']['rendered'], prod['content']['rendered'], prod['excerpt']['rendered'], prod['date'], prod['categories'], prod['featured_media'], prod['acf']['product_site']);
           onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           if (count <= 20) {

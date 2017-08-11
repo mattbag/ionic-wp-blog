@@ -9,13 +9,13 @@
 
 <ion-content>
   <div padding>
-  <h2>{{product?.title}}</h2>
+  <h2 [innerHTML]="product?.title"></h2>
   </div>
 <img [src]="product?.media_url | async">
   <div [innerHTML]="product?.content" padding></div>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="product?.product_site">
   <ion-toolbar color="secondary" (click)="openLink()">
     <ion-title>Buy Now</ion-title>
   </ion-toolbar>

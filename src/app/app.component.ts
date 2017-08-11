@@ -23,7 +23,7 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: 'HomePage' },
       { title: 'Blog', component: 'BlogPage' },
-      { title: 'Monthly Top 10', component: 'CategoryPage' , cat_id : 19},
+      { title: 'Monthly Top 10', component: 'TopPage' , cat_id : 19},
       { title: 'Products', component: 'ProductsPage' },
       { title: 'Makeup', component: 'CategoryPage' , cat_id : 1},
       { title: 'Lifestyle', component: 'CategoryPage', cat_id : 17 },

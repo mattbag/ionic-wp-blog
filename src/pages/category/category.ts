@@ -47,7 +47,7 @@ export class CategoryPage {
   }
 
   ionViewDidLoad() {
-    console.log(this.products);
+    // console.log(this.products);
     if (this.page == undefined) {
       // console.log('undef');
       // this.page = { title: 'makeup' };
@@ -67,7 +67,7 @@ export class CategoryPage {
   presentLoading() {
     this.loader = this.loadingCtrl.create({
       spinner: 'hide',
-      content: `<img src="/assets/logo.gif">`
+      content: `<img src="assets/logo.gif">`
     });
     this.loader.present();
   }
