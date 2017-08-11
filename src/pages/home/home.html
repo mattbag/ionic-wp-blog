@@ -7,28 +7,27 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
-  <ion-slides> 
-  <ion-slide  *ngFor="let post of posts | async | slice:0:3" (click)="openPost(post)" tappable>
-     <ion-card>
-    <img [src]="post.media_url | async">
-    <ion-card-content>
-      <ion-card-title>
-        {{ post.title }}
-      </ion-card-title>
-      <div [innerHTML]="post.excerpt"></div>
-    </ion-card-content>
-  </ion-card>
-  </ion-slide>
-<ion-slide (click)="goBlog()" tappable>
-     <ion-card>
-  
-    <ion-card-content>
-    <img src="/assets/logo.gif" width="60%">
-     <button ion-button color="secondary">Check the blog</button>
-    </ion-card-content>
-  </ion-card>
-  </ion-slide>
-</ion-slides>
+ 
+  <ion-slides>
+    <ion-slide *ngFor="let post of posts | async | slice:0:10" (click)="openPost(post)" tappable>
+      <ion-card>
+
+        <!-- <dummy *ngIf="(post?.media_url | async) === null"></dummy> -->
+        <img [src]="post?.media_url | async" *ngIf="post.media_url">
+        <ion-card-content>
+          <ion-card-title>
+            {{ post.title }}
+          </ion-card-title>
+          <div [innerHTML]="post.excerpt"></div>
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+    <ion-slide (click)="goBlog()" tappable>
+      
+          <img src="/assets/logo.gif" width="60%">
+          <button ion-button color="secondary">Check the blog</button>
+     
+    </ion-slide>
+  </ion-slides>
 </ion-content>

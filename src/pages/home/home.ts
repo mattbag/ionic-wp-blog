@@ -19,13 +19,16 @@ export class HomePage {
   @ViewChild(Slides) slides: Slides;
   loader: Loading;
   posts: Observable<Post[]>;
-  posts3: any[];
+  // isLoaded: boolean;
 
   constructor(public navCtrl: NavController, public wpProvider: WpProvider, public loadingCtrl: LoadingController) {
     this.presentLoading();
     this.posts = this.wpProvider.getPosts();
     // this.posts = this.wpProvider.getPostsPage();
     this.posts.subscribe(data => {
+      // data.map(post=>{
+      // post.isLoaded = true;
+      // })
       this.loader.dismiss();
       // console.log(data);
       // this.posts3 = data.slice(0,3);

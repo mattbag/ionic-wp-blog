@@ -6,7 +6,7 @@ import { URLSearchParams } from '@angular/http';
 
 export class Post {
   public media_url: Observable<string>;
-  constructor(public authorId: number, public id: number, public title: string, public content: string, public excerpt: string, public date: string, public categories: string, public mediaId?: number) { }
+  constructor(public authorId: number, public id: number, public title: string, public content: string, public excerpt: string, public date: string, public categories: string, public mediaId?: number, public isLoaded: boolean = false) { }
 }
 export class Page {
   public media_url: Observable<string>;
@@ -65,7 +65,7 @@ export class WpProvider {
         var posts = [];
         for (let post of data) {
           let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
-          onePost.media_url = this.getMedia(onePost.mediaId);
+          // onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           posts.push(onePost);
         }
