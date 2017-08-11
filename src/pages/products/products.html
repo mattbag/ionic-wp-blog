@@ -16,7 +16,7 @@
       <ion-avatar item-start *ngIf="prod.media_url">
         <img [src]="prod.media_url | async" prod>
       </ion-avatar>
-      {{ prod.title }}
+<div [innerHTML]="prod?.title"></div>
       <!-- <div [innerHTML]="prod.excerpt"></div> -->
     </ion-item>
   </ion-list>

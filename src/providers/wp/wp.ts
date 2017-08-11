@@ -53,7 +53,7 @@ export class WpProvider {
       });
   }
   getPostsByCat(category: string): Observable<Post[]> {
-// console.log(category);
+    // console.log(category);
 
     const uRLSearchParams = new URLSearchParams();
     uRLSearchParams.set('categories', category);
@@ -70,7 +70,7 @@ export class WpProvider {
           posts.push(onePost);
         }
         // console.log(posts);
-        
+
         return posts;
       });
   }
@@ -91,26 +91,30 @@ export class WpProvider {
   //     });
   // }
 
-    getProds(category?: string): Observable<Post[]> {
-     
-       const uRLSearchParams = new URLSearchParams();
-       uRLSearchParams.set('categories', category);
-        uRLSearchParams.set('per_page', '20');
-         let instance = this.wpApiCustom.getInstance('products');
-    return instance.getList( { search: uRLSearchParams})
+  getProds(category?: string): Observable<Post[]> {
+
+
+    const uRLSearchParams = new URLSearchParams();
+    if(category != undefined){
+      console.log(category);
+      uRLSearchParams.set('categories', category);
+    }
+    uRLSearchParams.set('per_page', '50');
+    let instance = this.wpApiCustom.getInstance('products');
+    return instance.getList({ search: uRLSearchParams })
       .map(res => res.json())
       .map(data => {
         // console.log(data);
         let count = 0;
         var prods = [];
-        for (let prod of data.slice(0,20)) {
-          let onePost = new Post(prod[ 'author' ], prod[ 'id' ], prod[ 'title' ][ 'rendered' ], prod[ 'content' ][ 'rendered' ], prod[ 'excerpt' ][ 'rendered' ], prod[ 'date' ],prod['categories'], prod[ 'featured_media' ]);
+        for (let prod of data) {
+          let onePost = new Post(prod['author'], prod['id'], prod['title']['rendered'], prod['content']['rendered'], prod['excerpt']['rendered'], prod['date'], prod['categories'], prod['featured_media']);
           onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
-          if(count <= 20){
+          if (count <= 20) {
             prods.push(onePost);
             // console.log(count);
-          count++
+            count++
           }
         }
         return prods;
@@ -157,11 +161,11 @@ export class WpProvider {
 
     // })
   }
-   getPostsByType(type: string = 'product'): Observable<Post[]> {
+  getPostsByType(type: string = 'product'): Observable<Post[]> {
 
     const uRLSearchParams = new URLSearchParams();
     uRLSearchParams.set('types', type.toLocaleLowerCase().replace(' ', '_'));
-    
+
 
     return this.wpApiPosts.getList({ search: uRLSearchParams })
       .map(res => res.json())
