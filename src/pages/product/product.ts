@@ -23,12 +23,12 @@ export class ProductPage {
     
     // console.log(this.post);
     if (this.product == undefined) {
-      this.navCtrl.setRoot('BlogPage')
+      this.navCtrl.setRoot('ProductsPage')
     }
 
   }
 openLink(){
   console.log('linking');
-  
+  window.open('//google.com');
 }
 }

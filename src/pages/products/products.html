@@ -12,7 +12,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let prod of products | async" (click)="openPost(prod)" tappable>
+    <ion-item *ngFor="let prod of products | async" (click)="openProd(prod)" tappable>
       <ion-avatar item-start *ngIf="prod.media_url">
         <img [src]="prod.media_url | async" prod>
       </ion-avatar>
