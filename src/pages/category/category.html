@@ -16,7 +16,6 @@
     <img [src]="prod.media_url | async" prod>
     <ion-card-content>
       <ion-card-title [innerHTML]="prod.title">
-
       </ion-card-title>
       <div [innerHTML]="prod.excerpt"></div>
     </ion-card-content>
@@ -28,9 +27,7 @@
      <ion-card *ngFor="let post of posts | async" (click)="openPost(post)" tappable>
     <img [src]="post.media_url | async">
     <ion-card-content>
-      <ion-card-title>
-        {{ post.title }}
-      </ion-card-title>
+      <ion-card-title [innerHTML]="post.title"></ion-card-title>
       <div [innerHTML]="post.excerpt"></div>
     </ion-card-content>
   </ion-card>
@@ -44,7 +41,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar color="light">
-    <ion-segment [(ngModel)]="category_side" color="secondary">
+    <ion-segment [(ngModel)]="category_side" color="secondary" (ionChange)="segmentChange()">
       <ion-segment-button value="products">
         <ion-icon name="ios-eye-outline"></ion-icon>
       </ion-segment-button>

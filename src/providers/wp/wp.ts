@@ -93,13 +93,13 @@ export class WpProvider {
 
   getProds(category?: string): Observable<Post[]> {
 
-
+    console.log(category);
     const uRLSearchParams = new URLSearchParams();
     if(category != undefined){
-      console.log(category);
+      
       uRLSearchParams.set('categories', category);
     }
-    uRLSearchParams.set('per_page', '50');
+    uRLSearchParams.set('per_page', '10');
     let instance = this.wpApiCustom.getInstance('products');
     return instance.getList({ search: uRLSearchParams })
       .map(res => res.json())

@@ -44,6 +44,7 @@ export class CategoryPage {
     this.posts.subscribe(r =>{this.loader.dismiss()});
 
     this.products = this._wp.getProds(this.page.cat_id);
+    this.products.subscribe(r =>{this.loader.dismiss()});
   }
 
   ionViewDidLoad() {
@@ -77,5 +78,10 @@ export class CategoryPage {
    openProd(post: Post) {
     this.navCtrl.push('ProductPage', { post: post });
   }
-
+  segmentChange(){
+    // console.log('changed');
+    this.presentLoading();
+    setTimeout(()=>{ this.loader.dismiss()},999)
+   
+  }
 }

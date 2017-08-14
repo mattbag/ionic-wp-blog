@@ -16,15 +16,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'products.html',
 })
 export class ProductsPage {
+  products_count: number = 10;
   products: Observable<Post[]>;
+  prod_slice: any[] = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public _wp: WpProvider) {
      this.products = this._wp.getProds();
+     
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductsPage');
-  }
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad ProductsPage');
+  // }
  openPost(post: Post) {
     this.navCtrl.push('PostPage', { post: post });
   }
