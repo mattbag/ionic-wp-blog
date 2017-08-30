@@ -10,7 +10,7 @@
 
 <ion-content padding>
   <ion-card *ngFor="let post of posts" (click)="openPost(post)" tappable>
-    <img [src]="post?.media_url | async" *ngIf="post?.media_url">
+    <img [src]="post?.images.source_url" *ngIf="post?.images.source_url">
     <ion-card-content>
       <ion-card-title>
 <div [innerHTML]="post?.title"></div>

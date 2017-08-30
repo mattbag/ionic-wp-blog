@@ -4,9 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { WpApiPosts, WpApiMedia, WpApiPages, WpApiCustom } from 'wp-api-angular';
 import { URLSearchParams } from '@angular/http';
 
+import { CacheService } from "ionic-cache";
+
 export class Post {
   public media_url: Observable<string>;
-  constructor(public authorId: number, public id: number, public title: string, public content: string, public excerpt: string, public date: string, public categories: string, public mediaId?: number, public product_site?: string) { }
+  constructor(public authorId: number, public id: number, public title: string, public content: string, public excerpt: string, public date: string, public categories: string, public mediaId?: number, public product_site?: string, public images?: any) { }
 }
 export class Page {
   public media_url: Observable<string>;
@@ -16,23 +18,24 @@ export class Page {
 @Injectable()
 export class WpProvider {
 
-  constructor(public wpApiPosts: WpApiPosts, public wpApiMedia: WpApiMedia, public wpApiPages: WpApiPages, public wpApiCustom: WpApiCustom) {
+  constructor(public wpApiPosts: WpApiPosts, public wpApiMedia: WpApiMedia, public wpApiPages: WpApiPages, public wpApiCustom: WpApiCustom, private cache: CacheService) {
     console.log('Hello WpProvider Provider');
   }
 
   getPosts(): Observable<Post[]> {
-    return this.wpApiPosts.getList()
+    let request = this.wpApiPosts.getList()
       .map(res => res.json())
       .map(data => {
         var posts = [];
         for (let post of data) {
-          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
-          onePost.media_url = this.getMedia(onePost.mediaId);
+          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media'], post['product_site'], post['better_featured_image']);
+          // onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           posts.push(onePost);
         }
         return posts;
       });
+      return this.cache.loadFromObservable('TBIHomePosts', request);
   }
   getPostsPage(page: number): Observable<Post[]> {
 
@@ -44,13 +47,14 @@ export class WpProvider {
       .map(data => {
         var posts = [];
         for (let post of data) {
-          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media']);
-          onePost.media_url = this.getMedia(onePost.mediaId);
+          let onePost = new Post(post['author'], post['id'], post['title']['rendered'], post['content']['rendered'], post['excerpt']['rendered'], post['date'], post['categories'], post['featured_media'], post['product_site'], post['better_featured_image']);
+          // onePost.media_url = this.getMedia(onePost.mediaId);
           // onePost.categories = this.getCat(onePost.id, 1);
           posts.push(onePost);
         }
         return posts;
       });
+
   }
   getPostsByCat(category: string): Observable<Post[]> {
     // console.log(category);
@@ -95,8 +99,8 @@ export class WpProvider {
 
     console.log(category);
     const uRLSearchParams = new URLSearchParams();
-    if(category != undefined){
-      
+    if (category != undefined) {
+
       uRLSearchParams.set('categories', category);
     }
     uRLSearchParams.set('per_page', '10');

@@ -9,11 +9,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { WpProvider } from '../providers/wp/wp';
 
 import { Http, HttpModule } from '@angular/http';
-import { 
-  WpApiModule,
-  WpApiLoader,
-  WpApiStaticLoader
-} from 'wp-api-angular'
+import { WpApiModule,WpApiLoader,WpApiStaticLoader} from 'wp-api-angular'
+import { CacheModule } from "ionic-cache";
 
 export function WpApiLoaderFactory(http) {
   return new WpApiStaticLoader(http, 'http://the-beautyinsider.com/wp-json');
@@ -31,7 +28,8 @@ export function WpApiLoaderFactory(http) {
       provide: WpApiLoader,
       useFactory: (WpApiLoaderFactory),
       deps: [Http]
-    })
+    }),
+    CacheModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

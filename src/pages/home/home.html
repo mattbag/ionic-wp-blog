@@ -10,11 +10,11 @@
 <ion-content>
  
   <ion-slides>
-    <ion-slide *ngFor="let post of posts | async | slice:0:10" (click)="openPost(post)" tappable>
+    <ion-slide *ngFor="let post of posts" (click)="openPost(post)" tappable>
       <ion-card>
 
         <!-- <dummy *ngIf="(post?.media_url | async) === null"></dummy> -->
-        <img [src]="post?.media_url | async" *ngIf="post.media_url">
+        <img [src]="post?.images.source_url" *ngIf="post?.images.source_url">
         <ion-card-content>
           <ion-card-title>
             <div [innerHTML]="post.title"></div> 

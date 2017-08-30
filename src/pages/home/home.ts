@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs/Observable';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, LoadingController, Loading, Slides } from 'ionic-angular';
 import { Post, WpProvider } from "../../providers/wp/wp";
@@ -18,19 +18,20 @@ import { Post, WpProvider } from "../../providers/wp/wp";
 export class HomePage {
   @ViewChild(Slides) slides: Slides;
   loader: Loading;
-  posts: Observable<Post[]>;
+  posts: any[];
   // isLoaded: boolean;
 
   constructor(public navCtrl: NavController, public wpProvider: WpProvider, public loadingCtrl: LoadingController) {
     this.presentLoading();
-    this.posts = this.wpProvider.getPosts();
+    let _latest = this.wpProvider.getPosts();
     // this.posts = this.wpProvider.getPostsPage();
-    this.posts.subscribe(data => {
+    _latest.subscribe(data => {
       // data.map(post=>{
       // post.isLoaded = true;
       // })
+      this.posts = data;
       this.loader.dismiss();
-      // console.log(data);
+
       // this.posts3 = data.slice(0,3);
 
       // console.log(this.posts3)

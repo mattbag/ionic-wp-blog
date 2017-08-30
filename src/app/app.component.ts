@@ -4,6 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CacheService } from "ionic-cache/dist";
 
 @Component({
   templateUrl: 'app.html'
@@ -16,10 +17,10 @@ export class MyApp {
   pages: Array<{title: string, component: any, cat_id? :number}>;
   wpPages: Observable<Page[]>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public _wp: WpProvider) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public _wp: WpProvider, public cache: CacheService) {
     this.initializeApp();
+    cache.setDefaultTTL(60 * 60 * 12)
 
-// categories will be attached with a query
     this.pages = [
       { title: 'Home', component: 'HomePage' },
       { title: 'Blog', component: 'BlogPage' },
@@ -32,10 +33,10 @@ export class MyApp {
       { title: 'Beauty Talk', component: 'CategoryPage' , cat_id : 18}
     ];
 
-    this.wpPages = this._wp.getPages();
-      this.wpPages.map(page=>{
-        this.pages.push()
-      })
+    // this.wpPages = this._wp.getPages();
+    //   this.wpPages.map(page=>{
+    //     this.pages.push()
+    //   })
   }
 
   initializeApp() {
