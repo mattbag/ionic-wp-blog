@@ -54,3 +54,11 @@ img{
          opacity: 0;
      }
 }
+.card-blog{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 1rem;
+ flex-direction: column;
+ text-align: center
+}

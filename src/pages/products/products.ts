@@ -22,7 +22,6 @@ export class ProductsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public _wp: WpProvider) {
      this.products = this._wp.getProds();
-     
   }
 
   // ionViewDidLoad() {

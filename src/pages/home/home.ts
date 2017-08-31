@@ -38,8 +38,8 @@ export class HomePage {
     });
   }
   ngAfterViewInit() {
-    this.slides.centeredSlides = true;
-    this.slides.slidesPerView = 1.2;
+    // this.slides.centeredSlides = true;
+    // this.slides.slidesPerView = 1.2;
     // this.slides.spaceBetween = 20;
     // this.slides.loop = true;
     // this.slides.initialSlide = 2;

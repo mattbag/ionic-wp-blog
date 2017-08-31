@@ -97,7 +97,7 @@ export class WpProvider {
 
   getProds(category?: string): Observable<Post[]> {
 
-    console.log(category);
+    // console.log(category);
     const uRLSearchParams = new URLSearchParams();
     if (category != undefined) {
 

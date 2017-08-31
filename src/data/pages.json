@@ -1,0 +1,19 @@
+[
+    {
+        "title": "Home",
+        "component": "HomePage"
+    },
+    {
+        "title": "Blog",
+        "component": "BlogPage"
+    },
+    {
+        "title": "Monthly Top 10",
+        "component": "TopPage",
+        "cat_id": 19
+    },
+    {
+        "title": "Latest Products",
+        "component": "ProductsPage"
+    }
+]

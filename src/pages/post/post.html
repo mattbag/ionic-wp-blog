@@ -11,6 +11,6 @@
   <div padding>
   <h2> <div [innerHTML]="post?.title"></div></h2>
   </div>
-<img [src]="post?.media_url | async">
+  <img [src]="post?.images.source_url" *ngIf="post?.images.source_url">
   <div [innerHTML]="post?.content" padding></div>
 </ion-content>
