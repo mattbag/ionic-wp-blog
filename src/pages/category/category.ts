@@ -16,6 +16,7 @@ import { IonicPage, NavController, NavParams, Loading, LoadingController } from 
   templateUrl: 'category.html',
 })
 export class CategoryPage {
+  posts: any[];
   products: Observable<Post[]>;
   loader: Loading;
   content: string;
@@ -23,40 +24,45 @@ export class CategoryPage {
   page: any;
   pageData: any;
   featured: Observable<any>;;
-  posts: Observable<Post[]>;
+  // posts: Observable<Post[]>;
   constructor(public navCtrl: NavController, public navParams: NavParams, public _wp: WpProvider, public loadingCtrl: LoadingController) {
     // console.log(this.page.title);
+    this.presentLoading();
     this.page = this.navParams.get('page');
     //  console.log(this.page.cat_id);
-    if (this.page == undefined) {
-      // console.log('undef');
-      // this.page = { title: 'makeup' };
-      this.navCtrl.setRoot('HomePage');
-      // console.log(this.page);
-      return
+    // if (this.page == undefined) {
+    //   // console.log('undef');
+    //   // this.page = { title: 'makeup' };
+    //   this.navCtrl.setRoot('HomePage');
+    //   // console.log(this.page);
+    //   return
 
-    }
-
-    if (this.posts === undefined) {
-      this.posts = this._wp.getPostsByCat(this.page.cat_id);
-      this.presentLoading();
-    }
-    this.posts.subscribe(r =>{this.loader.dismiss()});
-
-    this.products = this._wp.getProds(this.page.cat_id);
-    this.products.subscribe(r =>{this.loader.dismiss()});
+    // }
+    
   }
 
   ionViewDidLoad() {
-    // console.log(this.products);
+    // // console.log(this.products);
     if (this.page == undefined) {
       // console.log('undef');
       // this.page = { title: 'makeup' };
+      this.loader.dismiss();
       this.navCtrl.setRoot('HomePage');
       // console.log(this.page);
       return
 
     }
+    this.products = this._wp.getProds(this.page.cat_id);
+    this.products.subscribe(r =>{this.loader.dismiss()});
+    let _latest = this._wp.getPosts();
+
+    _latest.subscribe(data => {
+    
+      this.posts = data;
+      // this.loader.dismiss();
+
+    });
+
     this.pageData = this._wp.getPageBySlug(this.page.title);
     this.pageData.subscribe(res => {
       // console.log(res[0]);

@@ -63,7 +63,7 @@ export class WpProvider {
     uRLSearchParams.set('categories', category);
     console.log('getting');
 
-    return this.wpApiPosts.getList({ search: uRLSearchParams })
+    let request = this.wpApiPosts.getList({ search: uRLSearchParams })
       .map(res => res.json())
       .map(data => {
         var posts = [];
@@ -74,9 +74,10 @@ export class WpProvider {
           posts.push(onePost);
         }
         // console.log(posts);
-
+       
         return posts;
       });
+      return this.cache.loadFromObservable(`TBI-${category}-products`, request);
   }
   getMedia(id: number): Observable<string> {
     return this.wpApiMedia.get(id)
