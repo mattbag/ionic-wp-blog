@@ -8,28 +8,33 @@
 </ion-header>
 
 <ion-content>
+
   <ion-card *ngFor="let post of posts" (click)="openPost(post)" tappable>
-    
-            <!-- <dummy *ngIf="(post?.media_url | async) === null"></dummy> -->
-            <img [src]="post?.images.source_url" *ngIf="post?.images.source_url">
-            <ion-card-content>
-              <ion-card-title>
-                <div [innerHTML]="post.title"></div> 
-              </ion-card-title>
-              <!-- <p>{{post?.excerpt}}</p> -->
-               <div [innerHTML]="post.excerpt"></div> 
-            </ion-card-content>
-          </ion-card>
-          <div (click)="goBlog()" tappable class="card-blog">
-            
-                <img src="assets/logo.gif" width="60%">
-                <button ion-button color="secondary">Check the blog</button>
-           
-          </div>
-  <!-- <ion-slides>
-    <ion-slide>
-     
-    </ion-slide>
-    
-  </ion-slides> -->
+
+    <img [src]="post?.images.source_url" *ngIf="post?.images.source_url">
+    <ion-card-content>
+      <ion-card-title>
+        <div [innerHTML]="post.title"></div>
+      </ion-card-title>
+      <!-- <p>{{post?.excerpt}}</p> -->
+      <div [innerHTML]="post.excerpt"></div>
+    </ion-card-content>
+  </ion-card>
+  <div (click)="goBlog()" tappable class="card-blog">
+
+    <img src="assets/logo.gif" width="60%">
+    <button ion-button color="secondary">Check the blog</button>
+
+  </div>
+
+  <ion-list style="margin-bottom:0">
+    <ion-list-header>
+      Categories
+    </ion-list-header>
+    <ion-item *ngFor="let cat of cats" (click)="openPage(cat)">
+      <ion-icon name="star" item-start></ion-icon>
+      {{cat.title}}
+    </ion-item>
+  </ion-list>
+
 </ion-content>

@@ -1,14 +1,8 @@
 // import { Observable } from 'rxjs/Observable';
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, LoadingController, Loading, Slides } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, LoadingController, Loading } from 'ionic-angular';
 import { Post, WpProvider } from "../../providers/wp/wp";
-
-/**
- * Generated class for the HomePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import pages from './../../app/app.pages'
 
 @IonicPage()
 @Component({
@@ -16,7 +10,7 @@ import { Post, WpProvider } from "../../providers/wp/wp";
   templateUrl: 'home.html',
 })
 export class HomePage {
-  @ViewChild(Slides) slides: Slides;
+  cats: any[];
   loader: Loading;
   posts: any[];
   // isLoaded: boolean;
@@ -26,24 +20,14 @@ export class HomePage {
     let _latest = this.wpProvider.getPosts();
     // this.posts = this.wpProvider.getPostsPage();
     _latest.subscribe(data => {
-      // data.map(post=>{
-      // post.isLoaded = true;
-      // })
+   
       this.posts = data;
       this.loader.dismiss();
 
-      // this.posts3 = data.slice(0,3);
-
-      // console.log(this.posts3)
     });
+    this.cats = pages.cats;
   }
-  ngAfterViewInit() {
-    // this.slides.centeredSlides = true;
-    // this.slides.slidesPerView = 1.2;
-    // this.slides.spaceBetween = 20;
-    // this.slides.loop = true;
-    // this.slides.initialSlide = 2;
-  }
+
   presentLoading() {
     this.loader = this.loadingCtrl.create({
       spinner: 'hide',
@@ -57,5 +41,10 @@ export class HomePage {
   }
   goBlog() {
     this.navCtrl.setRoot('BlogPage')
+  }
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.navCtrl.setRoot(page.component, {page : page});
   }
 }
