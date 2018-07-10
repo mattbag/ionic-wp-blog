@@ -345,7 +345,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 function WpApiLoaderFactory(http) {
-    return new __WEBPACK_IMPORTED_MODULE_8_wp_api_angular__["WpApiStaticLoader"](http, 'http://the-beautyinsider.com/wp-json');
+    return new __WEBPACK_IMPORTED_MODULE_8_wp_api_angular__["WpApiStaticLoader"](http, 'https://the-beautyinsider.com/wp-json');
 }
 var AppModule = (function () {
     function AppModule() {
